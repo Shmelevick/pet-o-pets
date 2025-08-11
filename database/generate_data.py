@@ -16,7 +16,7 @@ def generate_species() -> None:
     """Генерация видов животных"""
     species_types: list = ['Собака', 'Кошка', 'Попугай', 'Хомяк', 'Черепаха', 'Кролик', 'Змея']
     data: list[dict[str, str]] = [{'species_name': name} for name in species_types]
-    
+
     engine = get_engine()
     # begin() — откроет транзакцию и закоммитит автоматически при выходе
     with engine.begin() as conn:
