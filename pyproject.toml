@@ -1,0 +1,22 @@
+[project]
+name = "sqlalchemy-stepik"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "alembic>=1.16.4",
+    "asyncpg>=0.30.0",
+    "clickhouse-driver>=0.2.9",
+    "docker>=7.1.0",
+    "icecream>=2.1.5",
+    "loguru>=0.7.3",
+    "psycopg2-binary>=2.9.10",
+    "pytest>=8.4.1",
+    "pytest-asyncio>=1.1.0",
+    "pytest-cov>=6.2.1",
+    "pytest-html>=4.1.1",
+    "python-dotenv>=1.1.1",
+    "ruff>=0.12.4",
+    "sqlalchemy>=2.0.41",
+]
