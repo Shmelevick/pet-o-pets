@@ -23,7 +23,7 @@ class Owners(Base):
     )
 
     phone: Mapped[str | None] = mapped_column(
-        String(15), nullable=True,
+        String(32), nullable=True,
         comment="Номер телефона в международном формате"
     )
 

@@ -22,40 +22,33 @@ class ManipulationFacts(Base):
 
     pet_id: Mapped[int] = mapped_column(
         ForeignKey("pets.id", ondelete="CASCADE"),
-        index=True, nullable=False, comment="id питомца"
-    )
+        index=True, nullable=False, comment="id питомца")
 
     manipulation_id: Mapped[int] = mapped_column(
         ForeignKey("manipulations.manipulation_id", ondelete="RESTRICT"),
-        index=True, nullable=False, comment="id манипуляции"
-    )
+        index=True, nullable=False, comment="id манипуляции")
 
     is_planned: Mapped[bool] = mapped_column(
         Boolean, nullable=False, server_default=text("true"),
-        comment="Запланированная (true) или экстренная (false)"
-    )
+        comment="Запланированная (true) или экстренная (false)")
 
     begin_time: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), nullable=False, server_default=func.now(),
-        comment="Время начала"
-    )
+        DateTime(timezone=True), nullable=False, server_default=func.now(),comment="Время начала")
 
     end_time: Mapped[datetime | None] = mapped_column(
-        DateTime(timezone=True), nullable=True, comment="Время окончания"
-    )
+        DateTime(timezone=True), nullable=True, comment="Время окончания")
 
     actual_price: Mapped[Decimal | None] = mapped_column(
         Numeric(10, 2), nullable=True,
-        comment="Фактическая стоимость с учетом корректировок"
-    )
+        comment="Фактическая стоимость с учетом корректировок")
 
     status: Mapped[str] = mapped_column(
         String(20), nullable=False, server_default=text("'planned'"),
-        comment="Статус: planned/completed/canceled/rescheduled"
-    )
+        comment="Статус: planned/completed/canceled/rescheduled")
 
     result: Mapped[str | None] = mapped_column(Text, nullable=True)
-    complications: Mapped[str | None] = mapped_column(Text, nullable=True, comment="Описание осложнений")
+    complications: Mapped[str | None] = mapped_column(
+        Text, nullable=True, comment="Описание осложнений")
     notes: Mapped[str | None] = mapped_column(Text, nullable=True, comment="Доп. заметки")
 
     __table_args__ = (
@@ -63,18 +56,15 @@ class ManipulationFacts(Base):
         CheckConstraint("actual_price IS NULL OR actual_price >= 0", name="chk_fact_price_nonneg"),
         CheckConstraint(
             "end_time IS NULL OR end_time >= begin_time",
-            name="chk_fact_end_after_begin"
-        ),
+            name="chk_fact_end_after_begin"),
         # допустимые статусы
         CheckConstraint(
             "status IN ('planned','completed','canceled','rescheduled')",
-            name="chk_fact_status_allowed"
-        ),
+            name="chk_fact_status_allowed"),
         # если статус completed — должно быть end_time
         CheckConstraint(
             "(status <> 'completed') OR (end_time IS NOT NULL)",
-            name="chk_fact_completed_has_end"
-        ),
+            name="chk_fact_completed_has_end"),
 
         # --- индексы ---
         Index("ix_mf_pet_begin_time", "pet_id", "begin_time"),

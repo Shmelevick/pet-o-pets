@@ -177,6 +177,18 @@ wheels = [
 ]
 
 [[package]]
+name = "faker"
+version = "37.5.3"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "tzdata" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/ce/5d/7797a74e8e31fa227f0303239802c5f09b6722bdb6638359e7b6c8f30004/faker-37.5.3.tar.gz", hash = "sha256:8315d8ff4d6f4f588bd42ffe63abd599886c785073e26a44707e10eeba5713dc", size = 1907147, upload-time = "2025-07-30T15:52:19.528Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/4b/bf/d06dd96e7afa72069dbdd26ed0853b5e8bd7941e2c0819a9b21d6e6fc052/faker-37.5.3-py3-none-any.whl", hash = "sha256:386fe9d5e6132a915984bf887fcebcc72d6366a25dd5952905b31b141a17016d", size = 1949261, upload-time = "2025-07-30T15:52:17.729Z" },
+]
+
+[[package]]
 name = "greenlet"
 version = "3.2.4"
 source = { registry = "https://pypi.org/simple" }
@@ -513,6 +525,7 @@ dependencies = [
     { name = "asyncpg" },
     { name = "clickhouse-driver" },
     { name = "docker" },
+    { name = "faker" },
     { name = "icecream" },
     { name = "loguru" },
     { name = "psycopg2-binary" },
@@ -531,6 +544,7 @@ requires-dist = [
     { name = "asyncpg", specifier = ">=0.30.0" },
     { name = "clickhouse-driver", specifier = ">=0.2.9" },
     { name = "docker", specifier = ">=7.1.0" },
+    { name = "faker", specifier = ">=37.5.3" },
     { name = "icecream", specifier = ">=2.1.5" },
     { name = "loguru", specifier = ">=0.7.3" },
     { name = "psycopg2-binary", specifier = ">=2.9.10" },

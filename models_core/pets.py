@@ -17,41 +17,34 @@ class Pets(Base):
     __tablename__ = "pets"
 
     id: Mapped[int] = mapped_column(
-        Integer, primary_key=True, autoincrement=True,comment="ID питомца"
-    )
+        Integer, primary_key=True, autoincrement=True,comment="ID питомца")
 
     species_id: Mapped[int | None] = mapped_column(
         ForeignKey("species.species_id", ondelete="SET NULL"),
         nullable=True, index=True,
-        comment="ID вида животного"
-    )
+        comment="ID вида животного")
 
     owner_id: Mapped[int | None] = mapped_column(
         ForeignKey("owners.owner_id", ondelete="SET NULL"),
         nullable=True, index=True,
-        comment="ID владельца"
-    )
+        comment="ID владельца")
 
     name: Mapped[str] = mapped_column(
         String(50), nullable=False,
-        comment="Кличка питомца"
-    )
+        comment="Кличка питомца")
 
     sex: Mapped[str] = mapped_column(
         String(1), nullable=False,
         server_default=text("'M'"),
-        comment="Пол: M — мужской, F — женский"
-    )
+        comment="Пол: M — мужской, F — женский")
 
     weight: Mapped[float | None] = mapped_column(
         Float, nullable=True,
-        comment="Вес в кг"
-    )
+        comment="Вес в кг")
 
     birthdate: Mapped[datetime | None] = mapped_column(
         DateTime(timezone=True), nullable=True,
-        comment="Дата рождения"
-    )
+        comment="Дата рождения")
 
     __table_args__ = (
         # Допустимые значения пола
@@ -64,8 +57,7 @@ class Pets(Base):
             "weight IS NULL OR weight >= 0",
             name="chk_pet_weight_nonneg"
         ),
-        {"comment": "Справочник питомцев"},
-    )
+        {"comment": "Справочник питомцев"})
 
     def __repr__(self) -> str:
         return (

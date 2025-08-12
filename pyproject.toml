@@ -9,6 +9,7 @@ dependencies = [
     "asyncpg>=0.30.0",
     "clickhouse-driver>=0.2.9",
     "docker>=7.1.0",
+    "faker>=37.5.3",
     "icecream>=2.1.5",
     "loguru>=0.7.3",
     "psycopg2-binary>=2.9.10",
