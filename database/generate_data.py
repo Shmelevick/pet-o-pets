@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 from .engine import get_engine
 from models_core.base import Base
 from models_core.species import Species
-from models_core.m import Manipulation
+from models_core.manipulations import Manipulation
 from models_core.owners import Owners
 from models_core.pets import Pets
 
@@ -43,14 +43,14 @@ def generate_species() -> None:
     with engine.begin() as conn:
         conn.execute(insert(Species), data)
 
-def generate_m() -> None:
+def generate_manipulations() -> None:
     """Генерация манипуляций/услуг"""
-    _trancate_table("m")
+    _trancate_table("manipulations")
 
     columns = ['manipulation_name', 'category',  'price', 'price_min',
                 'price_max', 'price_unit', 'is_range']
 
-    m = [
+    manipulations = [
         ('Консультация', 'Терапия', None, 500, 1000, '₽', True),
         ('Анализ крови', 'Диагностика', 1500, None, None, '₽', False),
         ('УЗИ', 'Диагностика', None, 2000, 3000, '₽', True),
@@ -65,7 +65,7 @@ def generate_m() -> None:
 
     engine = get_engine()
     with Session(engine) as session:
-        for row in m:
+        for row in manipulations:
             dictionary = dict(zip(columns, row))
             print(dictionary)
             session.execute(insert(Manipulation), dictionary)
@@ -139,48 +139,13 @@ def generate_pets(n=10):
         conn.execute(insert(Pets), data)
 
 
-def generate_manipulation_facts(n=20):
-    _trancate_table("manipulation_facts")
 
-    fake = Faker("ru_Ru")
-
-    with engine.begin() as conn:
-        pets_ids = list(conn.execute(select(Pets.__table__.c.id)).scalars())
-        m_data = conn.execute(
-            select(
-                Manipulation.__table__.c.manipulation_id,
-                Manipulation.__table__.c.price,
-                Manipulation.__table__.c.price_min,
-                Manipulation.__table__.c.price_max,
-                Manipulation.__table__.c.price_unit,
-                Manipulation.__table__.c.is_range
-            )
-        ).all()
-
-    ic(m_data)
-    l = len(m_data)
-        
-    data = [
-        {
-            "pet_id":  random.choice(pets_ids),
-            "manipulation_id":  None,
-            "is_planned":  None,
-            "begin_time":  None,
-            "end_time":  None,
-            "actual_price":  _get_price(),
-            "status":  None,
-            "result":  None,
-            "complications":  None,
-            "notes":  None,
-        } for _ in range(n)
-    ]
-    ic(data)
         
 
 
 
 generate_species()
-generate_m()
+generate_manipulations()
 generate_owners()
 generate_pets()
-generate_manipulation_facts()
+# generate_manipulation_facts()
